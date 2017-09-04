@@ -1,4 +1,4 @@
-#!flask/bin/python
+#!python
 from flask import Flask,make_response,jsonify
 from flask_restful import Api
 from lightsapi import LightsAPI
