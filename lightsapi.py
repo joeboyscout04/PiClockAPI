@@ -13,13 +13,13 @@ class LightsAPI(Resource):
         self.reqparse.add_argument('green', type=int, default=0, location='json')
         super(LightsAPI,self).__init__()
 
-    def get(self, id):
+    def get(self):
         vals = piglow.get()
         #make json from this
 
         pass
 
-    def post(self, id):
+    def post(self):
         args = self.reqparse.parse_args()
         for k, v in args.iteritems():
             piglow.colour(k,v)
