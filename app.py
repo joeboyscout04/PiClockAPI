@@ -22,6 +22,9 @@ api = Api(app)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+@app.route('/')
+def index():
+    return "Hello, World!"
 
 #API Routes
 api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
