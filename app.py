@@ -1,4 +1,4 @@
-#!python
+#!piglow-env/bin/python
 from flask import Flask,make_response,jsonify
 from flask_restful import Api
 from lightsapi import LightsAPI
@@ -28,4 +28,4 @@ api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
