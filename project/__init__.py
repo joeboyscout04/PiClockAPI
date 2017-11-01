@@ -1,7 +1,7 @@
-#!piglow-env/bin/python
+# project/__init__.py
 from flask import Flask,make_response,jsonify
 from flask_restful import Api
-from lightsapi import LightsAPI
+#from lightsapi import LightsAPI
 
 #Plan out the API endpoints
 
@@ -13,9 +13,13 @@ from lightsapi import LightsAPI
 
 #Control by arm?
 
-
+#instantiate the app
 app = Flask(__name__)
 api = Api(app)
+
+
+# set config
+app.config.from_object('project.config.DevelopmentConfig')
 
 
 @app.errorhandler(404)
@@ -26,8 +30,17 @@ def not_found(error):
 def index():
     return "Hello, World!"
 
+
+@app.route('/ping', methods=['GET'])
+def ping_pong():
+    return jsonify({
+        'status': 'success',
+        'message': 'pong!'
+    })
+
+
 #API Routes
-api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
+#api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
 
 
 if __name__ == '__main__':
