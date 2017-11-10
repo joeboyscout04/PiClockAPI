@@ -1,21 +1,20 @@
-FROM resin/raspberry-pi-python:latest
+FROM resin/raspberry-pi-python:2.7
 
 # Support for x86 via https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
-#RUN [ "cross-build-start" ]
+RUN [ "cross-build-start" ]
 
 # Enable systemd
 ENV INITSYSTEM on
 
 # set working directory
 ENV APPDIR /usr/src/app
+
 RUN sudo mkdir -p ${APPDIR}
 WORKDIR ${APPDIR}
 
 # install raspian dependencies
-#RUN apt-get update
-#RUN sudo apt-get upgrade
-#RUN apt-get install python-pip
-RUN apt-get install python-smbus
+RUN apt-get update
+RUN apt-get install -t jessie python-smbus
 
 # add requirements (to leverage Docker cache)
 ADD ./Pipfile ${APPDIR}/Pipfile
@@ -30,6 +29,8 @@ RUN pipenv install
 ADD . ${APPDIR}
 
 # run server
+# enable i2c support modprobe i2c-dev &&
+#https://docs.resin.io/hardware/i2c-and-spi/#i2c
 CMD pipenv run python manage.py runserver -h 0.0.0.0
 
-#RUN [ "cross-build-end" ]
+RUN [ "cross-build-end" ]
