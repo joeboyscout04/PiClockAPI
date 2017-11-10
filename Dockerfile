@@ -1,7 +1,7 @@
 FROM resin/raspberry-pi-python:2.7
 
 # Support for x86 via https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
-RUN [ "cross-build-start" ]
+#RUN [ "cross-build-start" ]
 
 # Enable systemd
 ENV INITSYSTEM on
@@ -33,4 +33,4 @@ ADD . ${APPDIR}
 #https://docs.resin.io/hardware/i2c-and-spi/#i2c
 CMD pipenv run python manage.py runserver -h 0.0.0.0
 
-RUN [ "cross-build-end" ]
+#RUN [ "cross-build-end" ]
