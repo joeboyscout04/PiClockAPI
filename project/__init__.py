@@ -3,7 +3,7 @@
 import os
 from flask import Flask,make_response,jsonify
 from flask_restful import Api
-#from lightsapi import LightsAPI
+from api.lightsapi import LightsAPI
 
 #Plan out the API endpoints
 
@@ -42,7 +42,7 @@ def ping_pong():
 
 
 #API Routes
-#api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
+api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
 
 
 if __name__ == '__main__':
