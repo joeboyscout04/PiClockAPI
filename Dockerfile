@@ -1,17 +1,20 @@
-FROM python:3.6.1
+FROM python:2.7.14
 
 # set working directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # add requirements (to leverage Docker cache)
-ADD ./requirements.txt /usr/src/app/requirements.txt
+ADD ./Pipfile /usr/src/app/Pipfile
+ADD ./Pipfile.lock /usr/src/app/Pipfile.lock
 
-# install requirements
-RUN pip install -r requirements.txt
+# install environment
+RUN pip install pipenv
+ENV PIPENV_TIMEOUT=600
+RUN pipenv install
 
 # add app
 ADD . /usr/src/app
 
 # run server
-CMD python manage.py runserver -h 0.0.0.0
+CMD pipenv run python manage.py runserver -h 0.0.0.0
