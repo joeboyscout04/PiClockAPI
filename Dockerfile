@@ -1,5 +1,7 @@
 FROM resin/raspberry-pi-python:2.7
 
+RUN export UNAME=$(uname -a)
+
 # Support for x86 via https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
 #RUN [ "cross-build-start" ]
 
@@ -29,8 +31,8 @@ RUN pipenv install
 ADD . ${APPDIR}
 
 # run server
-# enable i2c support modprobe i2c-dev &&
-#https://docs.resin.io/hardware/i2c-and-spi/#i2c
+# enable i2c support https://docs.resin.io/hardware/i2c-and-spi/#i2c
+CMD modprobe i2c-dev
 CMD pipenv run python manage.py runserver -h 0.0.0.0
 
 #RUN [ "cross-build-end" ]
