@@ -1,6 +1,6 @@
 FROM resin/raspberry-pi-python:2.7
 
-RUN export UNAME=$(uname -a)
+#RUN export UNAME=$(uname -a)
 
 # Support for x86 via https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
 #RUN [ "cross-build-start" ]

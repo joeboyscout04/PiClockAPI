@@ -5,6 +5,7 @@ services:
   users-service:
     container_name: users-service
     build: .
+    image: joeboyscout/piclockapi  # goes to DockerHub registry
     volumes:
       - '.:/usr/src/app'
     ports:
