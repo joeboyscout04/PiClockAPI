@@ -5,19 +5,24 @@ import piglow
 class LightsAPI(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('white', type=int, default=0, location='json')
-        self.reqparse.add_argument('red', type=int, default=0, location='json')
-        self.reqparse.add_argument('yellow', type=int, default=0, location='json')
-        self.reqparse.add_argument('orange', type=int, default=0, location='json')
-        self.reqparse.add_argument('blue', type=int, default=0, location='json')
-        self.reqparse.add_argument('green', type=int, default=0, location='json')
+        for color, number in piglow.colours.iteritems():
+            self.reqparse.add_argument(color, type=int, default=0, location='json')
+
         super(LightsAPI,self).__init__()
 
-    def get(self):
-        vals = piglow.get()
-        #make json from this
+    def _get_leds(self):
+        led_values = piglow.get()
+        return_values = {}
+        for i in range(len(led_values)):
+            led_value = led_values[i]
+            for color, number in piglow.colours.iteritems():
+                if number == ((i % 6) - 1):
+                    return_values[color] = led_value
 
-        pass
+        return return_values
+
+    def get(self):
+        return _get_leds()
 
     def post(self):
         args = self.reqparse.parse_args()
@@ -25,7 +30,7 @@ class LightsAPI(Resource):
             piglow.colour(k,v)
 
         piglow.show()
-        return
+        return _get_leds(self)
         
 
 

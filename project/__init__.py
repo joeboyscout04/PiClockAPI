@@ -1,8 +1,8 @@
 # project/__init__.py
 
 import os
-from flask import Flask,make_response,jsonify
-from flask_restful import Api
+from flask import Flask
+from flask_restful import Api,Resource
 from api.lightsapi import LightsAPI
 
 #Plan out the API endpoints
@@ -24,25 +24,23 @@ app_settings = os.getenv('APP_SETTINGS')
 app.config.from_object(app_settings)
 
 
-@app.errorhandler(404)
-def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
-
-@app.route('/')
-def index():
-    return "Hello, World!"
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world!'}
 
 
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'
-    })
-
+class Development(Resource):
+    def get(self):
+        return {
+            'status': 'success',
+            'message': 'pong!'
+        }
+    
 
 #API Routes
-api.add_resource(LightsAPI, '/lights', endpoint = 'lights')
+api.add_resource(HelloWorld, '/')
+api.add_resource(Development, '/ping', endpoint='ping')
+api.add_resource(LightsAPI, '/lights', endpoint='lights')
 
 
 if __name__ == '__main__':
