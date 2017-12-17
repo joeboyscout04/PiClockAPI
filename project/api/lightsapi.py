@@ -12,14 +12,14 @@ class LightsAPI(Resource):
 
     def _get_leds(self):
         # assume all colors have same value, just take first set of LEDs
-        led_values = piglow.get()[:5]
+        led_values = piglow.get()[:6]
         return_values = {}
-        for i in range(len(led_values)):
-            led_value = led_values[i]
+        for idx, value in enumerate(led_values):
             for color in piglow.colours:
                 number = piglow.colours[color]
-                if number == i:
-                    return_values[color] = led_value
+                print "the color: %s with number: %s and idx: %s", color, number, idx
+                if number == idx:
+                    return_values[color] = value
 
         return return_values
 
